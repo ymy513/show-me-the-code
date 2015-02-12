@@ -1,8 +1,9 @@
+#!/usr/bin/env python
 import Image
 import ImageDraw
 import ImageFont
 
-class UnreadMessage:
+class UnreadMessage(object):
 	def __init__(self):
 		self.fnt = None
 		self.im = None
