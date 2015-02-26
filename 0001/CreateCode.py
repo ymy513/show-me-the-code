@@ -2,11 +2,11 @@
 import uuid
 
 def CreateCode(count):
-	code_list = []
+	code_list = set（）
 	for i in xrange(count):
 		code = str(uuid.uuid4()).replace('-','').upper()
 		if not code in code_list:
-			code_list.append(code)
+			code_list.add(code)
 
 	return code_list
 
