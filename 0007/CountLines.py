@@ -1,6 +1,5 @@
 #!/usr/bin/env python
 import os,sys
-from collections import Counter
 
 total_lines = 0
 total_newlines = 0
