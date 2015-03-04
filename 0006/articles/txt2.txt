@@ -1,0 +1,1 @@
+The funny symbols you're encountering are a UTF-8 BOM (Byte Order Mark). To get rid of them, open the file using the correct encoding (I'm assuming you're on Python 3)
