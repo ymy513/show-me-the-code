@@ -1,18 +1,8 @@
 #!/usr/bin/env python
 import re
-from sys import argv
+import sys
 from string import punctuation
-from os.path import exists
 
-def file_read():
-    filename=raw_input("input your filename > ")
-    if exists(filename):
-        txt=open(filename)
-        print "Here's your file %r:" %filename
-        return txt.read()
-    else:
-        print "There is no file %r." %filename
-        exit()
 
 def counter(filename):
     r = re.compile(r'[{}]'.format(punctuation))
@@ -21,6 +11,6 @@ def counter(filename):
     return amount
 
 if __name__=="__main__":
-    filename = file_read()
-    result = counter(filename)
+    txt = open(sys.argv[1]).read()
+    result = counter(txt)
     print "There are %r words in this article." % result
