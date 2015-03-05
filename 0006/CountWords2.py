@@ -4,6 +4,7 @@ from collections import Counter
 
 
 for txtfile in os.listdir(sys.argv[1]):
-    txt=open(sys.argv[1]+"/"+txtfile)
+    txt=open(os.path.join(sys.argv[1],txtfile))
     wordcount=Counter(txt.read().split())
-    print [key for key, val in wordcount.iteritems() if val == max (wordcount.values())] 
+    maxword = max(wordcount.values())
+    print [key for key, val in wordcount.iteritems() if val == maxword]    
