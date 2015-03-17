@@ -1,3 +1,4 @@
+# https://docs.python.org/2/library/itertools.html#itertools.count
 # encoding=utf-8
 class itertoos(object):
     # count(10)-->10,11,12,13,……
