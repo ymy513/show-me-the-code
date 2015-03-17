@@ -2,7 +2,7 @@ import urllib2
 import re
 from os.path import basename
 from urlparse import urlsplit
-
+# from itertools import *
 # url = "http://tieba.baidu.com/p/2166231880"
 def getPage(url):
     url=url+"?see_lz=1"
@@ -20,18 +20,17 @@ def downImg(url):
     for imgUrl in imgUrls:
         imgData = urllib2.urlopen(imgUrl).read()
         fileName = basename(urlsplit(imgUrl)[2])
-        output = open(fileName,'wb')
-        output.write(imgData)
-        output.close()
+        # output = open(fileName,'wb')
+        with open(fileName,'wb') as output:
+            output.write(imgData)
+
        
 def downLoad(url):
     numb=getPage(url)
-    cont=0
     print "There are "+str(numb)+" pages."
-    while cont<numb:
-        cont+=1
-        print "Downloading "+url+"?see_lz=1&pn="+str(cont)+"..."
-        downImg(url+"?see_lz=1&pn="+str(cont))
+    for i in xrange(numb): 
+        print "Downloading "+url+"?see_lz=1&pn="+str(i)+"..."
+        downImg(url+"?see_lz=1&pn="+str(i))
     print 'Completed!'
 
 
