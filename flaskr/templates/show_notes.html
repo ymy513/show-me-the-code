@@ -1,0 +1,19 @@
+{% block body %}
+  <form action="{{ url_for('add_note') }}" method=post class=add-note>
+    <dl>
+      <dt>姓名:
+      <dd><input type=text size=30 name=id>
+      <dt>内容:
+      <dd><textarea name=note rows=5 cols=40></textarea>
+      <dd><input type=submit value=提交>
+    </dl>
+  </form>
+  
+  <ul class=notes>
+  {% for note in notes %}
+    <li><h2>{{ note.id }}</h2><h2>{{ note.time }}</h2>{{ note.note|safe }}
+  {% else %}
+    <li><em>没有内容</em>
+  {% endfor %}
+  </ul>
+{% endblock %}
