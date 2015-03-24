@@ -14,7 +14,7 @@ c.execute('drop table tasks')
 c.execute('create table tasks (id integer primary key autoincrement,task text, time text)')
 
 @app.route('/')
-def show_tasks(): 
+def show_tasks():
     # cur = c.execute('select id, note, time from notes order by time desc')
     cur = c.execute('select * from tasks')
     tasks = [dict(id=row[0],task=row[1], time=row[2]) for row in cur.fetchall()]
@@ -41,10 +41,11 @@ def search_task():
     search = request.args.get('search', '')
     c.execute("select * from tasks where task = (?)",[search])
     search_task = [dict(id=row[0],task=row[1], time=row[2]) for row in c.fetchall()]
-    return render_template('search_tasks.html',search_task = search_task)
+    return render_template('search_tasks.jade',search_task = search_task)
 
 if __name__=='__main__':
     app.debug = True
+    app.jinja_env.add_extension('pyjade.ext.jinja.PyJadeExtension')
     app.secret_key = 'super secret key'
     app.config['SESSION_TYPE'] = 'filesystem'
     app.run()

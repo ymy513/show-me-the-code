@@ -1,0 +1,14 @@
+body
+  ul.search-task
+    for task in search_task
+      li
+        h2=task.task
+        h2=task.time
+      form(action=url_for('del_task') method="GET")
+        button(name='id', type='submit', value=task.id)
+          删除
+    if not search_task
+      li
+        em
+          没有内容
+
