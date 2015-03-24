@@ -1,7 +1,7 @@
 {% block body %}
   
   <ul class=search-task>
-  {% for task in search_tasks %}
+  {% for task in search_task %}
     <li><h2>{{ task.task }}</h2><h2>{{ task.time }}</h2>
   <form action="{{ url_for('del_task') }}" method="GET">
     <button name=id type=submit value='{{ task.id }}'>删除</button>

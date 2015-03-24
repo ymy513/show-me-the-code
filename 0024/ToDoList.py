@@ -36,7 +36,7 @@ def del_task():
     conn.commit()
     return redirect(url_for('show_tasks'))
 
-@app.route('/search?',methods=['GET','POST'])
+@app.route('/search',methods=['GET','POST'])
 def search_task():
     search = request.args.get('search', '')
     c.execute("select * from tasks where task = (?)",[search])
