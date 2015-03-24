@@ -1,0 +1,26 @@
+{% block body %}
+  <form action="{{ url_for('add_task') }}" method=post class=add-task>
+    <dl>
+      <dt>任务:
+      <dd><textarea name=task rows=5 cols=40></textarea>
+      <dd><input type=submit value=提交>
+    </dl>
+  </form>
+
+  <form action = "{{ url_for('search_task' )}}" method='GET'>
+      <dt>搜索:
+      <dd><textarea name=search rows=1 cols=40></textarea>
+      <dd><input type=submit value=搜索>
+  </form>
+
+  <ul class=tasks>
+  {% for task in tasks %}
+    <li><h2>{{ task.task }}</h2><h2>{{ task.time }}</h2>
+  <form action="{{ url_for('del_task') }}" method="GET">
+    <button name=id type=submit value='{{ task.id }}'>删除</button>
+  </form>
+  {% else %}  <!--Effective Python上说这样写不好来着 -->
+    <li><em>没有内容</em>
+  {% endfor %}
+  </ul>
+{% endblock %}

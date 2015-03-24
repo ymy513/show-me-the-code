@@ -1,0 +1,13 @@
+{% block body %}
+  
+  <ul class=search-task>
+  {% for task in search_tasks %}
+    <li><h2>{{ task.task }}</h2><h2>{{ task.time }}</h2>
+  <form action="{{ url_for('del_task') }}" method="GET">
+    <button name=id type=submit value='{{ task.id }}'>删除</button>
+  </form>
+  {% else %}
+    <li><em>没有内容</em>
+  {% endfor %}
+  </ul>
+{% endblock %}
