@@ -25,23 +25,15 @@ def show_tasks(page):
     # count = len(cur.fetchall())
     # # tasks = get_tasks_for_page(page,PER_PAGE,count)
     tasks = []
-    # if page*PER_PAGE<count:
-    #     for i in xrange(page):
-    #         for j in xrange(PER_PAGE):
-    #             cur.fetchone()
-    #     for i in xrange(PER_PAGE):
-    #         row = cur.fetchone()
-    #         tasks.append([dict(id=row[0],task=row[1],time=row[2])])
-    # print tasks
-    # if not tasks and page!=1:
-    #     abort(404)
+   
     count = 0
     for row in cur.fetchall():
         count += 1 
         if count<(page-1)*PER_PAGE:
+            print row
             continue
         else:
-            tasks.append([dict(id=row[0],task=row[1],time=row[2])])
+            tasks.append(dict(id=row[0],task=row[1],time=row[2]))
     print tasks
     #tasks = [dict(id=row[0],task=row[1], time=row[2])]
     #tasks = [dict(id=row[0],task=row[1], time=row[2]) for row in cur.fetchall()]
