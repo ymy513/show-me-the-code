@@ -4,6 +4,7 @@ import sqlite3
 from flask import Flask, request, g, redirect, session,url_for, \
      abort, render_template, flash
 from contextlib import closing
+from math import ceil
 
 app = Flask(__name__)
 
@@ -13,12 +14,38 @@ c = conn.cursor()
 c.execute('drop table tasks')
 c.execute('create table tasks (id integer primary key autoincrement,task text, time text)')
 
-@app.route('/')
-def show_tasks():
+
+PER_PAGE=5
+
+@app.route('/',defaults={'page':1})
+@app.route('/<int:page>')
+def show_tasks(page):
     # cur = c.execute('select id, note, time from notes order by time desc')
     cur = c.execute('select * from tasks')
-    tasks = [dict(id=row[0],task=row[1], time=row[2]) for row in cur.fetchall()]
-    return render_template('show_tasks.html', tasks=tasks)
+    # count = len(cur.fetchall())
+    # # tasks = get_tasks_for_page(page,PER_PAGE,count)
+    tasks = []
+    # if page*PER_PAGE<count:
+    #     for i in xrange(page):
+    #         for j in xrange(PER_PAGE):
+    #             cur.fetchone()
+    #     for i in xrange(PER_PAGE):
+    #         row = cur.fetchone()
+    #         tasks.append([dict(id=row[0],task=row[1],time=row[2])])
+    # print tasks
+    # if not tasks and page!=1:
+    #     abort(404)
+    count = 0
+    for row in cur.fetchall():
+        count += 1 
+        if count<(page-1)*PER_PAGE:
+            continue
+        else:
+            tasks.append([dict(id=row[0],task=row[1],time=row[2])])
+    print tasks
+    #tasks = [dict(id=row[0],task=row[1], time=row[2])]
+    #tasks = [dict(id=row[0],task=row[1], time=row[2]) for row in cur.fetchall()]
+    return render_template('show_tasks.html',tasks=tasks)
 
 @app.route('/add',methods=['GET','POST'])
 def add_task():
@@ -29,14 +56,14 @@ def add_task():
     return redirect(url_for('show_tasks'))
 
 
-@app.route('/delete?',methods=['GET','POST'])
+@app.route('/delete',methods=['GET','POST'])
 def del_task():
     del_id = request.args.get('id', '')
     c.execute("delete from tasks where id = (?)",del_id)
     conn.commit()
     return redirect(url_for('show_tasks'))
 
-@app.route('/search',methods=['GET','POST'])
+@app.route('/search/',methods=['GET','POST'])
 def search_task():
     search = request.args.get('search', '')
     c.execute("select * from tasks where task = (?)",[search])
